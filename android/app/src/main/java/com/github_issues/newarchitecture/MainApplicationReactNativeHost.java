@@ -1,4 +1,4 @@
-package com.git_issuess.newarchitecture;
+package com.github_issues.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.git_issuess.BuildConfig;
-import com.git_issuess.newarchitecture.components.MainComponentsRegistry;
-import com.git_issuess.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.github_issues.BuildConfig;
+import com.github_issues.newarchitecture.components.MainComponentsRegistry;
+import com.github_issues.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

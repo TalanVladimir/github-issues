@@ -4,7 +4,7 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 platform :ios, '12.4'
 install! 'cocoapods', :deterministic_uuids => false
 
-target 'Git_Issuess' do
+target 'Github_Issues' do
   config = use_native_modules!
 
   # Flags change depending on the env values.
@@ -26,7 +26,7 @@ target 'Git_Issuess' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'Git_IssuessTests' do
+  target 'Github_IssuesTests' do
     inherit! :complete
     # Pods for testing
   end

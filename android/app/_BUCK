@@ -35,12 +35,12 @@ android_library(
 
 android_build_config(
     name = "build_config",
-    package = "com.git_issuess",
+    package = "com.github_sssues",
 )
 
 android_resource(
     name = "res",
-    package = "com.git_issuess",
+    package = "com.github_issues",
     res = "src/main/res",
 )
 

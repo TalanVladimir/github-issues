@@ -1,4 +1,4 @@
-package com.git_issuess;
+package com.github_issues;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
@@ -12,7 +12,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "Git_Issuess";
+    return "Github_Issues";
   }
 
   /**
