@@ -1,9 +1,10 @@
 {
-  "name": "git_issues",
+  "name": "github_issues",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
+    "andr": "npx react-native start",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
@@ -11,7 +12,7 @@
   },
   "dependencies": {
     "react": "18.1.0",
-    "react-native": "0.70.2"
+    "react-native": "0.70.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
