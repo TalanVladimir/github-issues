@@ -1,14 +1,24 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 
-import { Body } from './Body';
-import { Header } from './Header';
+import { Body } from './Home/Body/Body';
+import { Header } from './Home/Header/Header';
 
 export const Home = () => {
   return (
-    <ScrollView contentInsetAdjustmentBehavior='automatic'>
+    <ScrollView
+      contentInsetAdjustmentBehavior='automatic'
+      style={styles.container}
+    >
       <Header />
       <Body />
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#FFFFFF',
+    height: '100%',
+  },
+});

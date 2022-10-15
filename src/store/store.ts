@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from './reducers/counter';
+import counterReducer from './reducers/items';
 import organisationReducer from './reducers/organisation';
 import repoReducer from './reducers/repo';
 import issuesReducer from './reducers/issues';
@@ -9,7 +9,7 @@ export const store = configureStore({
     organisation: organisationReducer,
     repo: repoReducer,
     issues: issuesReducer,
-    counter: counterReducer,
+    items: counterReducer,
   },
 });
 

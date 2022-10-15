@@ -1,2 +1,12 @@
-node_modules
-android/app/build
+# node.js
+/node_modules
+
+# Android/IntelliJ
+build/
+.idea
+.gradle
+local.properties
+*.iml
+
+# testing
+/coverage
