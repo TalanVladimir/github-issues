@@ -2,8 +2,9 @@ import React, { PropsWithChildren, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
+import { ListItem } from './ListItem/ListItem';
 
-export const List: React.FC<PropsWithChildren<{}>> = ({ children }) => {
+export const List: React.FC = () => {
   const { organisation } = useSelector(
     (state: RootState) => state.organisation,
   );
@@ -11,9 +12,14 @@ export const List: React.FC<PropsWithChildren<{}>> = ({ children }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Title</Text>
-      <Text style={[styles.description]}>{organisation}</Text>
-      <Text style={[styles.description]}>{repo}</Text>
+      <Text style={styles.title}>Your results:</Text>
+      <ListItem title='default: title' text='default: item' />
+      <View style={[styles.footer]}>
+        <Text style={styles.footerTitle}>Footer:</Text>
+        <Text style={styles.footerText}>
+          org: {organisation} repo: {repo}
+        </Text>
+      </View>
     </View>
   );
 };
@@ -21,34 +27,27 @@ export const List: React.FC<PropsWithChildren<{}>> = ({ children }) => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 10,
-    display: 'flex',
-    flexWrap: 'nowrap',
-    flexDirection: 'column',
-    borderWidth: 1,
+    borderWidth: 3,
     borderRadius: 4,
-    borderColor: '#FF0000',
+    borderColor: '#000000',
+    padding: 5,
   },
 
   title: {
-    fontSize: 28,
-    fontWeight: '600',
-    // backgroundColor: '#000FFF',
-    borderColor: '#FFFFFF',
-    borderWidth: 1,
-    borderRadius: 4,
-    borderStyle: 'solid',
-    display: 'flex',
-    textAlign: 'center',
-    flexDirection: 'column',
-    flexWrap: 'wrap',
+    fontSize: 18,
+    fontWeight: '900',
+    borderBottomWidth: 1,
+    marginBottom: 10,
   },
 
-  description: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    backgroundColor: '#F00FFF',
-    fontSize: 18,
-    fontWeight: '400',
+  footer: { marginTop: 10, borderTopWidth: 1, fontSize: 14 },
+
+  footerTitle: {
+    fontWeight: '900',
+    textAlign: 'left',
+  },
+
+  footerText: {
+    textAlign: 'center',
   },
 });

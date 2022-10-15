@@ -26,13 +26,13 @@ export const Header = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 10,
+    backgroundColor: '#FFAB00',
   },
   header: {
-    fontSize: 30,
+    fontSize: 35,
     textAlign: 'center',
     borderColor: Colors.black,
-    // borderTopWidth: 1,
-    borderBottomWidth: 1,
+    color: '#FFFFFF',
+    borderBottomWidth: 3,
   },
 });

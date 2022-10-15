@@ -1,14 +1,14 @@
-import { PropsWithChildren } from 'react';
 import { Text, View } from 'react-native';
 
-export const ListItem: React.FC<PropsWithChildren<{}>> = ({ children }) => {
-  // const { organisation } = useSelector(
-  //     (state: RootState) => state.organisation,
-  // );
+export const ListItem: React.FC<{ title: string; text: string }> = (
+  children,
+) => {
+  const { title, text } = children;
 
   return (
     <View>
-      <Text>Text</Text>
+      <Text>{title}</Text>
+      <Text>{text}</Text>
     </View>
   );
 };
