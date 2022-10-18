@@ -10,3 +10,6 @@ local.properties
 
 # testing
 /coverage
+
+# octopus api
+/src/services/auth.ts
