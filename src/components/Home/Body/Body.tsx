@@ -1,20 +1,14 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Search } from './Search/Search';
+import { View } from 'react-native';
 
-import { List } from './List/List';
+import { Search } from './Search/Search';
+import { Issues } from './Issues/Issues';
 
 export const Body = () => {
   return (
-    <View style={styles.container}>
+    <View>
       <Search />
-      <List />
+      <Issues />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-  },
-});
