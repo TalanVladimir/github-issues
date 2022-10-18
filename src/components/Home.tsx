@@ -20,5 +20,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFFFFF',
     height: '100%',
+    color: '#000000',
   },
 });

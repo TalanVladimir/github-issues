@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontWeight: '900',
     fontSize: 18,
+    color: '#000000',
   },
 
   input: {
@@ -72,6 +73,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     borderRadius: 4,
     borderStyle: 'solid',
+    color: '#000000',
   },
 
   button: {

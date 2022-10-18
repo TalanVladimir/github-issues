@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginBottom: 10,
     borderColor: '#005611',
+    color: '#000000',
   },
 
   footer: {
@@ -123,9 +124,11 @@ const styles = StyleSheet.create({
   footerTitle: {
     fontWeight: '900',
     textAlign: 'left',
+    color: '#000000',
   },
 
   footerText: {
     textAlign: 'right',
+    color: '#000000',
   },
 });

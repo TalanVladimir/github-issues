@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
   numb: {
     flex: 0.5,
     textAlign: 'center',
+    color: '#000000',
   },
 
   title: {
@@ -63,6 +64,7 @@ const styles = StyleSheet.create({
 
     flex: 0.5,
     textAlign: 'center',
+    color: '#000000',
   },
 
   row_second: {
@@ -74,6 +76,7 @@ const styles = StyleSheet.create({
   url: {
     flex: 1,
     textAlign: 'center',
+    color: '#000000',
   },
 
   row_third: {
@@ -83,5 +86,6 @@ const styles = StyleSheet.create({
   date: {
     flex: 0.5,
     textAlign: 'center',
+    color: '#000000',
   },
 });
