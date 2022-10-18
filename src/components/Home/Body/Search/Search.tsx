@@ -7,6 +7,7 @@ import {
   View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
+
 import { setOrganisation } from '../../../../store/reducers/organisation';
 import { setRepo } from '../../../../store/reducers/repo';
 
@@ -17,8 +18,8 @@ export const Search = () => {
   const [inputRepo, setInputRepo] = useState('');
 
   useEffect(() => {
-    setInputOrganisation('default organisation');
-    setInputRepo('default repo');
+    setInputOrganisation('TalanVladimir');
+    setInputRepo('epam_lab');
   }, []);
 
   return (
@@ -37,7 +38,7 @@ export const Search = () => {
         placeholder='your text...'
         style={styles.input}
         onChangeText={(newRepo: string) => {
-          setInputRepo;
+          setInputRepo(newRepo);
         }}
         value={inputRepo}
       />
@@ -56,28 +57,33 @@ export const Search = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    marginHorizontal: 10,
   },
+
   title: {
     textAlign: 'left',
     fontWeight: '900',
     fontSize: 18,
   },
+
   input: {
     borderColor: '#000000',
-    borderWidth: 3,
+    borderWidth: 2,
+    paddingLeft: 15,
     borderRadius: 4,
     borderStyle: 'solid',
   },
+
   button: {
     marginTop: 10,
     borderColor: '#000000',
-    borderWidth: 3,
+    borderWidth: 2,
     borderRadius: 4,
-    backgroundColor: '#FFAD40',
+    backgroundColor: '#FF8000',
     alignItems: 'center',
     padding: 10,
   },
+
   buttonText: {
     fontSize: 18,
     fontWeight: '900',
