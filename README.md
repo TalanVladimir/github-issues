@@ -12,7 +12,7 @@
 
 - [x] App is based on React Native
 - [ ] State and view of the app are separated
-- [ ] Static types are used to ensure soundness of the app
+- [x] Static types are used to ensure soundness of the app
 - [ ] Code of the app adheres to the best industry practices
 - [ ] App is well tested
 - [ ] Minimum required documentation is provided
