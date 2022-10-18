@@ -19,10 +19,6 @@ export const Issues: React.FC = () => {
   const [status, setStatus] = useState(false);
   const [data, setData] = useState<Issue[]>([]);
 
-  const changeStatus = () => {
-    // setStatus(!status);
-  };
-
   const fetchData = async () => {
     await getIssues(organisation, repo)
       .then((newData: any) => {
@@ -41,31 +37,26 @@ export const Issues: React.FC = () => {
           [],
         );
 
-        setData(newArray);
-        setStatus(true);
+        setTimeout(() => {
+          setData(newArray);
+          setStatus(true);
+        }, 2000);
       })
       .catch((error: Error) => {
-        setData([]);
+        setTimeout(() => {
+          setData([]);
+          setStatus(true);
+        }, 500);
       });
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      fetchData();
-    }, 2000);
+    !status && fetchData();
   }, []);
 
   useEffect(() => {
     setStatus(false);
-
-    console.log('zopa');
-
-    setTimeout(() => {
-      console.log('popa');
-      fetchData();
-    }, 2000);
-
-    console.log('gopa');
+    fetchData();
   }, [organisation, repo]);
 
   return data.length === 0 || !status ? (
@@ -82,7 +73,7 @@ export const Issues: React.FC = () => {
       </Text>
     </View>
   ) : (
-    <View style={styles.container} onTouchStart={changeStatus}>
+    <View style={styles.container}>
       <Text style={styles.title}>Your results:</Text>
       {data.map((item: Issue, index: Number) => (
         <IssuesItem
