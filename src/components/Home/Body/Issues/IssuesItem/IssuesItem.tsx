@@ -1,4 +1,5 @@
-import { Linking, StyleSheet, Text, View } from 'react-native';
+import { Linking, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import { Theme } from '../../../../../themes/themes';
 
 export const IssuesItem: React.FC<{
   key: number;
@@ -8,17 +9,51 @@ export const IssuesItem: React.FC<{
   created_at: Date;
   updated_at: Date;
 }> = (children): JSX.Element => {
+  const isDarkMode = useColorScheme() === 'dark';
+
   const { numb, title, url, created_at, updated_at } = children;
 
   return (
     <View style={styles.container}>
       <View style={styles.row_first}>
-        <Text style={styles.numb}>{numb}</Text>
-        <Text style={styles.title}>{title}</Text>
+        <Text
+          style={[
+            styles.numb,
+            {
+              borderRightWidth: 1,
+              color: isDarkMode
+                ? Theme.colors.primaryColor
+                : Theme.colors.secondaryColor,
+            },
+          ]}
+        >
+          {numb}
+        </Text>
+        <Text
+          style={[
+            styles.title,
+            {
+              borderRightWidth: 1,
+              color: isDarkMode
+                ? Theme.colors.primaryColor
+                : Theme.colors.secondaryColor,
+            },
+          ]}
+        >
+          {title}
+        </Text>
       </View>
       <View style={styles.row_second}>
         <Text
-          style={styles.url}
+          style={[
+            styles.url,
+            {
+              borderRightWidth: 1,
+              color: isDarkMode
+                ? Theme.colors.primaryColor
+                : Theme.colors.secondaryColor,
+            },
+          ]}
           onPress={() => {
             Linking.openURL(url);
           }}
@@ -27,10 +62,30 @@ export const IssuesItem: React.FC<{
         </Text>
       </View>
       <View style={styles.row_third}>
-        <Text style={[styles.date, { borderRightWidth: 1 }]}>
+        <Text
+          style={[
+            styles.date,
+            {
+              borderRightWidth: 1,
+              color: isDarkMode
+                ? Theme.colors.primaryColor
+                : Theme.colors.secondaryColor,
+            },
+          ]}
+        >
           Created: {created_at.toISOString().substring(0, 10)}
         </Text>
-        <Text style={styles.date}>
+        <Text
+          style={[
+            styles.date,
+            {
+              borderRightWidth: 1,
+              color: isDarkMode
+                ? Theme.colors.primaryColor
+                : Theme.colors.secondaryColor,
+            },
+          ]}
+        >
           Updated: {updated_at.toISOString().substring(0, 10)}
         </Text>
       </View>
@@ -56,15 +111,12 @@ const styles = StyleSheet.create({
   numb: {
     flex: 0.5,
     textAlign: 'center',
-    color: '#000000',
   },
 
   title: {
     borderLeftWidth: 1,
-
     flex: 0.5,
     textAlign: 'center',
-    color: '#000000',
   },
 
   row_second: {
@@ -76,7 +128,6 @@ const styles = StyleSheet.create({
   url: {
     flex: 1,
     textAlign: 'center',
-    color: '#000000',
   },
 
   row_third: {
@@ -86,6 +137,5 @@ const styles = StyleSheet.create({
   date: {
     flex: 0.5,
     textAlign: 'center',
-    color: '#000000',
   },
 });
