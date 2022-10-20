@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, useColorScheme, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { getIssues } from '../../../../services/octokitApi';
@@ -8,16 +8,23 @@ import { Issue } from '../../../../types';
 import { IssuesItem } from './IssuesItem/IssuesItem';
 
 import { Dimensions } from 'react-native';
+import { Theme } from '../../../../themes/themes';
+
 const { height } = Dimensions.get('window');
 
 export const Issues: React.FC = () => {
+  const isDarkMode = useColorScheme() === 'dark';
+
   const { organisation } = useSelector(
     (state: RootState) => state.organisation,
   );
   const { repo } = useSelector((state: RootState) => state.repo);
+  const { query } = useSelector((state: RootState) => state.query);
 
-  const [status, setStatus] = useState(false);
+  const [load, setLoad] = useState(true);
   const [data, setData] = useState<Issue[]>([]);
+
+  const [start, setStart] = useState(false);
 
   const fetchData = async () => {
     await getIssues(organisation, repo)
@@ -39,27 +46,25 @@ export const Issues: React.FC = () => {
 
         setTimeout(() => {
           setData(newArray);
-          setStatus(true);
-        }, 2000);
+          setLoad(true);
+        }, 500);
       })
       .catch((error: Error) => {
         setTimeout(() => {
           setData([]);
-          setStatus(true);
+          setLoad(true);
         }, 500);
       });
   };
 
   useEffect(() => {
-    !status && fetchData();
-  }, []);
+    if (query !== 0) {
+      setLoad(false);
+      fetchData();
+    }
+  }, [query]);
 
-  useEffect(() => {
-    setStatus(false);
-    fetchData();
-  }, [organisation, repo]);
-
-  return data.length === 0 || !status ? (
+  return data.length === 0 || !load ? (
     <View
       style={{
         flex: 1,
@@ -68,13 +73,34 @@ export const Issues: React.FC = () => {
         height: height - 263,
       }}
     >
-      <Text style={{ color: '#000000' }}>
-        {!status ? 'Loading...' : 'Not Found !!!'}
+      <Text
+        style={{
+          color: isDarkMode
+            ? Theme.colors.primaryDarkColor
+            : Theme.colors.secondaryDarkColor,
+        }}
+      >
+        {!load
+          ? 'Loading...'
+          : query === 0
+          ? 'Press search!!!'
+          : 'Not Found !!!'}
       </Text>
     </View>
   ) : (
     <View style={styles.container}>
-      <Text style={styles.title}>Your results:</Text>
+      <Text
+        style={[
+          styles.title,
+          {
+            color: isDarkMode
+              ? Theme.colors.primaryColor
+              : Theme.colors.secondaryColor,
+          },
+        ]}
+      >
+        Your results:
+      </Text>
       {data.map((item: Issue, index: Number) => (
         <IssuesItem
           key={item.id}
@@ -85,9 +111,29 @@ export const Issues: React.FC = () => {
           updated_at={item.updated_at}
         />
       ))}
-      <View style={[styles.footer]}>
-        <Text style={styles.footerTitle}>Search data:</Text>
-        <Text style={styles.footerText}>
+      <View style={styles.footer}>
+        <Text
+          style={[
+            styles.footerTitle,
+            {
+              color: isDarkMode
+                ? Theme.colors.primaryColor
+                : Theme.colors.secondaryColor,
+            },
+          ]}
+        >
+          Search data:
+        </Text>
+        <Text
+          style={[
+            styles.footerText,
+            {
+              color: isDarkMode
+                ? Theme.colors.primaryColor
+                : Theme.colors.secondaryColor,
+            },
+          ]}
+        >
           org: {organisation} repo: {repo}
         </Text>
       </View>
@@ -111,7 +157,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginBottom: 10,
     borderColor: '#005611',
-    color: '#000000',
   },
 
   footer: {
@@ -124,11 +169,9 @@ const styles = StyleSheet.create({
   footerTitle: {
     fontWeight: '900',
     textAlign: 'left',
-    color: '#000000',
   },
 
   footerText: {
     textAlign: 'right',
-    color: '#000000',
   },
 });
