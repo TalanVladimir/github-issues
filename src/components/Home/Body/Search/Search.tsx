@@ -4,14 +4,22 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  useColorScheme,
   View,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setQuery } from '../../../../store/reducers/query';
 
 import { setOrganisation } from '../../../../store/reducers/organisation';
 import { setRepo } from '../../../../store/reducers/repo';
+import { RootState } from '../../../../store/store';
+import { Theme } from '../../../../themes/themes';
 
 export const Search = () => {
+  const { query } = useSelector((state: RootState) => state.query);
+
+  const isDarkMode = useColorScheme() === 'dark';
+
   const dispatch = useDispatch();
 
   const [inputOrganisation, setInputOrganisation] = useState('');
@@ -24,32 +32,87 @@ export const Search = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Organisation:</Text>
+      <Text
+        style={[
+          styles.title,
+          {
+            color: isDarkMode
+              ? Theme.colors.primaryColor
+              : Theme.colors.secondaryColor,
+          },
+        ]}
+      >
+        Organisation:
+      </Text>
       <TextInput
         placeholder='your text...'
-        style={styles.input}
+        style={[
+          styles.input,
+          {
+            color: isDarkMode
+              ? Theme.colors.primaryColor
+              : Theme.colors.secondaryColor,
+          },
+        ]}
         onChangeText={(newOrganisation: string) => {
           setInputOrganisation(newOrganisation);
         }}
         value={inputOrganisation}
       />
-      <Text style={styles.title}>Repo:</Text>
+      <Text
+        style={[
+          styles.title,
+          {
+            color: isDarkMode
+              ? Theme.colors.primaryColor
+              : Theme.colors.secondaryColor,
+          },
+        ]}
+      >
+        Repo:
+      </Text>
       <TextInput
         placeholder='your text...'
-        style={styles.input}
+        style={[
+          styles.input,
+          {
+            color: isDarkMode
+              ? Theme.colors.primaryColor
+              : Theme.colors.secondaryColor,
+          },
+        ]}
         onChangeText={(newRepo: string) => {
           setInputRepo(newRepo);
         }}
         value={inputRepo}
       />
       <TouchableOpacity
-        style={styles.button}
+        style={[
+          styles.button,
+          {
+            backgroundColor: isDarkMode
+              ? Theme.colors.primaryDarkColor
+              : Theme.colors.secondaryDarkColor,
+          },
+        ]}
         onPress={() => {
           dispatch(setOrganisation(inputOrganisation));
           dispatch(setRepo(inputRepo));
+          dispatch(setQuery(1 + query));
         }}
       >
-        <Text style={styles.buttonText}>Search</Text>
+        <Text
+          style={[
+            styles.buttonText,
+            {
+              color: isDarkMode
+                ? Theme.colors.primaryColor
+                : Theme.colors.secondaryColor,
+            },
+          ]}
+        >
+          Search
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -64,7 +127,6 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontWeight: '900',
     fontSize: 18,
-    color: '#000000',
   },
 
   input: {
@@ -73,7 +135,6 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     borderRadius: 4,
     borderStyle: 'solid',
-    color: '#000000',
   },
 
   button: {
@@ -81,7 +142,6 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
     borderWidth: 2,
     borderRadius: 4,
-    backgroundColor: '#FF8000',
     alignItems: 'center',
     padding: 10,
   },
@@ -89,6 +149,5 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 18,
     fontWeight: '900',
-    color: '#000000',
   },
 });
