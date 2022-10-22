@@ -19,6 +19,5 @@ export const Home = () => {
 const styles = StyleSheet.create({
   container: {
     height: '100%',
-    color: '#000000',
   },
 });

@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, useColorScheme, View } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { getIssues } from '../../../../services/octokitApi';
 import { RootState } from '../../../../store/store';
 import { Issue } from '../../../../types';
-import { IssuesItem } from './IssuesItem/IssuesItem';
 
-import { Dimensions } from 'react-native';
-import { Theme } from '../../../../themes/themes';
+import { IssuesItem } from './IssuesItem/IssuesItem';
+import { Pagination } from './Pagination/Pagination';
+
+import { ThemeContext } from '../../../../themes/ThemeProvider';
 
 const { height } = Dimensions.get('window');
 
 export const Issues: React.FC = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const { colors } = useContext(ThemeContext);
 
   const { organisation } = useSelector(
     (state: RootState) => state.organisation,
@@ -24,7 +25,7 @@ export const Issues: React.FC = () => {
   const [load, setLoad] = useState(true);
   const [data, setData] = useState<Issue[]>([]);
 
-  const [start, setStart] = useState(false);
+  const [page, setPage] = useState(0);
 
   const fetchData = async () => {
     await getIssues(organisation, repo)
@@ -73,13 +74,7 @@ export const Issues: React.FC = () => {
         height: height - 263,
       }}
     >
-      <Text
-        style={{
-          color: isDarkMode
-            ? Theme.colors.primaryDarkColor
-            : Theme.colors.secondaryDarkColor,
-        }}
-      >
+      <Text style={{ color: colors.primaryDarkColor }}>
         {!load
           ? 'Loading...'
           : query === 0
@@ -89,51 +84,30 @@ export const Issues: React.FC = () => {
     </View>
   ) : (
     <View style={styles.container}>
-      <Text
-        style={[
-          styles.title,
-          {
-            color: isDarkMode
-              ? Theme.colors.primaryColor
-              : Theme.colors.secondaryColor,
-          },
-        ]}
-      >
+      <Text style={[styles.title, { color: colors.primaryColor }]}>
         Your results:
       </Text>
-      {data.map((item: Issue, index: Number) => (
-        <IssuesItem
-          key={item.id}
-          numb={item.id}
-          title={item.title}
-          url={item.url}
-          created_at={item.created_at}
-          updated_at={item.updated_at}
-        />
-      ))}
+
+      {data
+        .filter((item, index) => index >= page && index < page + 4)
+        .map((item: Issue, index: Number) => (
+          <IssuesItem
+            key={item.id}
+            numb={item.id}
+            title={item.title}
+            url={item.url}
+            created_at={item.created_at}
+            updated_at={item.updated_at}
+          />
+        ))}
+
+      <Pagination data={data} />
+
       <View style={styles.footer}>
-        <Text
-          style={[
-            styles.footerTitle,
-            {
-              color: isDarkMode
-                ? Theme.colors.primaryColor
-                : Theme.colors.secondaryColor,
-            },
-          ]}
-        >
+        <Text style={[styles.footerTitle, { color: colors.primaryColor }]}>
           Search data:
         </Text>
-        <Text
-          style={[
-            styles.footerText,
-            {
-              color: isDarkMode
-                ? Theme.colors.primaryColor
-                : Theme.colors.secondaryColor,
-            },
-          ]}
-        >
+        <Text style={[styles.footerText, { color: colors.primaryColor }]}>
           org: {organisation} repo: {repo}
         </Text>
       </View>

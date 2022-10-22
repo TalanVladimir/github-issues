@@ -1,28 +1,23 @@
-import React from 'react';
-import { StyleSheet, Text, useColorScheme, View } from 'react-native';
-import { Theme } from '../../../themes/themes';
+import React, { useContext } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+
+import { ThemeContext } from '../../../themes/ThemeProvider';
 
 export const Header = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const theme = useContext(ThemeContext);
 
   return (
     <View
       style={[
         styles.container,
-        {
-          backgroundColor: isDarkMode
-            ? Theme.colors.primaryDarkColor
-            : Theme.colors.secondaryDarkColor,
-        },
+        { backgroundColor: theme.colors.primaryLightColor },
       ]}
     >
       <Text
         style={[
           styles.header,
           {
-            color: isDarkMode
-              ? Theme.colors.primaryColor
-              : Theme.colors.secondaryColor,
+            color: theme.colors.primaryTextColor,
           },
         ]}
       >

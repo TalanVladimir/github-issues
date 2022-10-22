@@ -1,16 +1,20 @@
-import { StatusBar, useColorScheme } from 'react-native';
+import { useContext } from 'react';
+import { StatusBar } from 'react-native';
+
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
+import { ThemeContext } from '../themes/ThemeProvider';
+
 export const Status = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const { isDark } = useContext(ThemeContext);
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    backgroundColor: isDark ? Colors.darker : Colors.lighter,
   };
 
   return (
     <StatusBar
-      barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+      barStyle={isDark ? 'dark-content' : 'light-content'}
       backgroundColor={backgroundStyle.backgroundColor}
     />
   );

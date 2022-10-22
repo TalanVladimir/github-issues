@@ -1,5 +1,7 @@
-import { Linking, StyleSheet, Text, useColorScheme, View } from 'react-native';
-import { Theme } from '../../../../../themes/themes';
+import { useContext } from 'react';
+import { Linking, StyleSheet, Text, View } from 'react-native';
+
+import { ThemeContext } from '../../../../../themes/ThemeProvider';
 
 export const IssuesItem: React.FC<{
   key: number;
@@ -9,7 +11,7 @@ export const IssuesItem: React.FC<{
   created_at: Date;
   updated_at: Date;
 }> = (children): JSX.Element => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const { colors } = useContext(ThemeContext);
 
   const { numb, title, url, created_at, updated_at } = children;
 
@@ -19,12 +21,7 @@ export const IssuesItem: React.FC<{
         <Text
           style={[
             styles.numb,
-            {
-              borderRightWidth: 1,
-              color: isDarkMode
-                ? Theme.colors.primaryColor
-                : Theme.colors.secondaryColor,
-            },
+            { borderRightWidth: 1, color: colors.primaryColor },
           ]}
         >
           {numb}
@@ -34,9 +31,7 @@ export const IssuesItem: React.FC<{
             styles.title,
             {
               borderRightWidth: 1,
-              color: isDarkMode
-                ? Theme.colors.primaryColor
-                : Theme.colors.secondaryColor,
+              color: colors.primaryColor,
             },
           ]}
         >
@@ -49,9 +44,7 @@ export const IssuesItem: React.FC<{
             styles.url,
             {
               borderRightWidth: 1,
-              color: isDarkMode
-                ? Theme.colors.primaryColor
-                : Theme.colors.secondaryColor,
+              color: colors.primaryColor,
             },
           ]}
           onPress={() => {
@@ -67,9 +60,7 @@ export const IssuesItem: React.FC<{
             styles.date,
             {
               borderRightWidth: 1,
-              color: isDarkMode
-                ? Theme.colors.primaryColor
-                : Theme.colors.secondaryColor,
+              color: colors.primaryColor,
             },
           ]}
         >
@@ -80,9 +71,7 @@ export const IssuesItem: React.FC<{
             styles.date,
             {
               borderRightWidth: 1,
-              color: isDarkMode
-                ? Theme.colors.primaryColor
-                : Theme.colors.secondaryColor,
+              color: colors.primaryColor,
             },
           ]}
         >
