@@ -10,14 +10,12 @@ import { store } from './store/store';
 import { ThemeProvider } from './themes/ThemeProvider';
 
 import { Home } from './components/Home';
-import { Status } from './components/Status';
 
 const App = () => {
   return (
     <ThemeProvider>
       <Provider store={store}>
-        <SafeAreaView>
-          <Status />
+        <SafeAreaView style={{ flex: 1 }}>
           <Home />
         </SafeAreaView>
       </Provider>
