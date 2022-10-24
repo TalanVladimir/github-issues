@@ -1,12 +1,12 @@
 # Technical assignment
 
-- [ ] Create mobile application that allows to browse GitHub issues.
+- [x] Create mobile application that allows to browse GitHub issues.
 
 ## Functional requirements
 
-- [ ] User should be able to provide GitHub organization and repository and fetch issues from it
-- [ ] Pagination is used to navigate between pages
-- [ ] User should be able to sort issues
+- [x] User should be able to provide GitHub organization and repository and fetch issues from it
+- [x] Pagination is used to navigate between pages
+- [x] User should be able to sort issues
 
 ## Technical requirements
 
@@ -21,5 +21,5 @@
 ## Assembly Android
 
 1. react-native bundle --platform android --dev false --entry-file index.ts --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res (npm run compile)
-2. cd Android
+2. cd android
 3. ./gradlew assembleDebug
