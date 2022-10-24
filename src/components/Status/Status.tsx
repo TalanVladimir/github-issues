@@ -3,7 +3,7 @@ import { StatusBar } from 'react-native';
 
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-import { ThemeContext } from '../themes/ThemeProvider';
+import { ThemeContext } from '../../themes/ThemeProvider';
 
 export const Status = () => {
   const { isDark } = useContext(ThemeContext);
