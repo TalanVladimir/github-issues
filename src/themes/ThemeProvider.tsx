@@ -1,6 +1,8 @@
 import React, { createContext, PropsWithChildren } from 'react';
 import { useColorScheme } from 'react-native';
-import { InitTheme, DarkTheme, LightTheme } from './themes';
+import { DarkTheme } from './DarkTheme';
+import { InitTheme } from './InitTheme';
+import { LightTheme } from './LightTheme';
 import { ThemeType } from './types';
 
 export const ThemeContext = createContext<ThemeType>(InitTheme);

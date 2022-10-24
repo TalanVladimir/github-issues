@@ -2,14 +2,15 @@ export type ThemeType = {
   theme: string;
   isDark: boolean;
   colors: {
-    primaryColor: string;
-    primaryLightColor: string;
-    primaryDarkColor: string;
-    secondaryColor: string;
-    secondaryLightColor: string;
-    secondaryDarkColor: string;
-    primaryTextColor: string;
-    secondaryTextColor: string;
+    primaryDark: string;
+    primaryLight: string;
+    primary: string;
+    text: string;
+    accent: string;
+    primaryText: string;
+    secondaryText: string;
+    divider: string;
+    white: string;
   };
   setTheme: () => void;
 };
