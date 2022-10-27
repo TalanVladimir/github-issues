@@ -1,14 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import organisationReducer from './reducers/organisation';
-import repoReducer from './reducers/repo';
 import queryReducer from './reducers/query';
+import prepareReducer from './reducers/prepare';
 
 export const store = configureStore({
   reducer: {
-    organisation: organisationReducer,
-    repo: repoReducer,
     query: queryReducer,
+    prepare: prepareReducer,
   },
 });
 
