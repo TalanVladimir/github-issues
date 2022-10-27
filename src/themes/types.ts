@@ -1,6 +1,4 @@
 export type ThemeType = {
-  theme: string;
-  isDark: boolean;
   colors: {
     primaryDark: string;
     primaryLight: string;
@@ -12,5 +10,4 @@ export type ThemeType = {
     divider: string;
     white: string;
   };
-  setTheme: () => void;
 };
