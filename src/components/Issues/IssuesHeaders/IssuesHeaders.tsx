@@ -1,79 +1,77 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPrepare } from '../../../store/reducers/prepare';
+import { RootState } from '../../../store/store';
 import { ThemeContext } from '../../../themes/ThemeProvider';
 
-export const IssuesHeaders: React.FC<{
-  filter: { column: number; isAsc: boolean };
-  setFilter: any;
-}> = (children) => {
+export const IssuesHeaders: React.FC = () => {
   const { colors } = useContext(ThemeContext);
 
-  const { filter, setFilter } = children;
+  const dispatch = useDispatch();
+  const { prepare } = useSelector((state: RootState) => state);
 
-  const [column, setColumn] = useState(1);
-  const [isAsc, setIsAsc] = useState(true);
+  useEffect(() => {}, [prepare.filter, prepare.isAsc]);
 
-  useEffect(() => {
-    setColumn(filter.column);
-    setIsAsc(filter.isAsc);
-  }, [filter.column, filter.isAsc]);
-
-  const updateFilter = (updateColumn: number) => {
-    const { column, isAsc } = filter;
-    if (updateColumn === column) {
-      setFilter({ column: updateColumn, isAsc: !isAsc });
+  const updateFilter = (updateFilter: number) => {
+    if (updateFilter === prepare.filter) {
+      dispatch(
+        setPrepare({
+          ...prepare,
+          filter: updateFilter,
+          isAsc: !prepare.isAsc,
+        }),
+      );
     } else {
-      setFilter({ column: updateColumn, isAsc: true });
+      dispatch(
+        setPrepare({
+          ...prepare,
+          filter: updateFilter,
+          isAsc: true,
+        }),
+      );
     }
   };
 
   return (
-    <View
-      style={[
-        styles.headers,
-        {
-          borderColor: colors.divider,
-          backgroundColor: colors.primaryLight,
-        },
-      ]}
-    >
+    <View style={[styles.headers, { backgroundColor: colors.primaryLight }]}>
       <Text
-        style={[styles.title, { color: colors.text }]}
+        style={[styles.title, { color: colors.primaryText }]}
         onPress={() => {
           updateFilter(1);
         }}
       >
         Title
-        {column === 1 && isAsc ? (
+        {prepare.filter === 1 && prepare.isAsc ? (
           <Text style={styles.asc}> ↑</Text>
-        ) : column === 1 ? (
+        ) : prepare.filter === 1 ? (
           <Text style={styles.asc}> ↓</Text>
         ) : null}
       </Text>
 
       <Text
-        style={[styles.created, { color: colors.text }]}
+        style={[styles.created, { color: colors.primaryText }]}
         onPress={() => {
           updateFilter(2);
         }}
       >
         Created
-        {column === 2 && isAsc ? (
+        {prepare.filter === 2 && prepare.isAsc ? (
           <Text style={styles.asc}> ↑</Text>
-        ) : column === 2 ? (
+        ) : prepare.filter === 2 ? (
           <Text style={styles.asc}> ↓</Text>
         ) : null}
       </Text>
       <Text
-        style={[styles.updated, { color: colors.text }]}
+        style={[styles.updated, { color: colors.primaryText }]}
         onPress={() => {
           updateFilter(3);
         }}
       >
         Updated
-        {column === 3 && isAsc ? (
+        {prepare.filter === 3 && prepare.isAsc ? (
           <Text style={styles.asc}> ↑</Text>
-        ) : column === 3 ? (
+        ) : prepare.filter === 3 ? (
           <Text style={styles.asc}> ↓</Text>
         ) : null}
       </Text>
@@ -85,7 +83,6 @@ const styles = StyleSheet.create({
   headers: {
     flexDirection: 'row',
     height: 35,
-    borderBottomWidth: 1,
   },
 
   title: {

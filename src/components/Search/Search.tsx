@@ -11,15 +11,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ThemeContext } from '../../themes/ThemeProvider';
 
 import { RootState } from '../../store/store';
-import { setOrganisation } from '../../store/reducers/organisation';
-import { setRepo } from '../../store/reducers/repo';
 import { setQuery } from '../../store/reducers/query';
 
 export const Search = () => {
   const { colors } = useContext(ThemeContext);
 
   const dispatch = useDispatch();
-  const { query } = useSelector((state: RootState) => state.query);
+  const { query } = useSelector((state: RootState) => state);
 
   const [inputOrganisation, setInputOrganisation] = useState('');
   const [inputRepo, setInputRepo] = useState('');
@@ -30,15 +28,7 @@ export const Search = () => {
   }, []);
 
   return (
-    <View
-      style={[
-        styles.container,
-        {
-          backgroundColor: colors.white,
-          borderBottomColor: colors.divider,
-        },
-      ]}
-    >
+    <View style={[styles.container, { backgroundColor: colors.white }]}>
       <View style={{ flexDirection: 'row' }}>
         <View style={{ flex: 0.5, marginLeft: 10, marginRight: 5 }}>
           <Text style={[styles.title, { color: colors.primaryText }]}>
@@ -49,9 +39,8 @@ export const Search = () => {
             style={[
               styles.input,
               {
-                borderColor: colors.divider,
                 backgroundColor: colors.primaryLight,
-                color: colors.text,
+                color: colors.secondaryText,
               },
             ]}
             onChangeText={(newOrganisation: string) => {
@@ -61,14 +50,7 @@ export const Search = () => {
           />
         </View>
         <View style={{ flex: 0.5, marginLeft: 5, marginRight: 10 }}>
-          <Text
-            style={[
-              styles.title,
-              {
-                color: colors.primaryText,
-              },
-            ]}
-          >
+          <Text style={[styles.title, { color: colors.primaryText }]}>
             Repo:
           </Text>
           <TextInput
@@ -76,9 +58,8 @@ export const Search = () => {
             style={[
               styles.input,
               {
-                borderColor: colors.divider,
                 backgroundColor: colors.primaryLight,
-                color: colors.text,
+                color: colors.secondaryText,
               },
             ]}
             onChangeText={(newRepo: string) => {
@@ -89,14 +70,15 @@ export const Search = () => {
         </View>
       </View>
       <TouchableOpacity
-        style={[
-          styles.button,
-          { borderColor: colors.divider, backgroundColor: colors.primary },
-        ]}
+        style={[styles.button, { backgroundColor: colors.primary }]}
         onPress={() => {
-          dispatch(setOrganisation(inputOrganisation));
-          dispatch(setRepo(inputRepo));
-          dispatch(setQuery(1 + query));
+          dispatch(
+            setQuery({
+              organisation: inputOrganisation,
+              repo: inputRepo,
+              query: 1 + query.query,
+            }),
+          );
         }}
       >
         <Text style={[styles.buttonText, { color: colors.text }]}>Search</Text>
@@ -108,7 +90,6 @@ export const Search = () => {
 const styles = StyleSheet.create({
   container: {
     height: 138,
-    borderBottomWidth: 1,
   },
 
   title: {
@@ -120,12 +101,9 @@ const styles = StyleSheet.create({
   input: {
     paddingLeft: 15,
     borderRadius: 11,
-    borderStyle: 'solid',
-    borderWidth: 1,
   },
 
   button: {
-    borderWidth: 1,
     marginTop: 10,
     borderRadius: 11,
     alignItems: 'center',

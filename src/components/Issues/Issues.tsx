@@ -1,6 +1,6 @@
 import React, { Fragment, useContext, useEffect, useState } from 'react';
 import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { getIssues } from '../../services/octokitApi';
 import { RootState } from '../../store/store';
@@ -11,6 +11,7 @@ import { Pagination } from '../Pagination/Pagination';
 
 import { ThemeContext } from '../../themes/ThemeProvider';
 import { IssuesHeaders } from './IssuesHeaders/IssuesHeaders';
+import { setPrepare } from '../../store/reducers/prepare';
 
 const { height } = Dimensions.get('window');
 
@@ -19,39 +20,27 @@ const PAGE_LIMIT = 10;
 export const Issues: React.FC = () => {
   const { colors } = useContext(ThemeContext);
 
-  const { organisation } = useSelector(
-    (state: RootState) => state.organisation,
-  );
-  const { repo } = useSelector((state: RootState) => state.repo);
-  const { query } = useSelector((state: RootState) => state.query);
+  const dispatch = useDispatch();
+  const { query } = useSelector((state: RootState) => state);
+  const { prepare } = useSelector((state: RootState) => state);
 
   const [load, setLoad] = useState(true);
+
   const [data, setData] = useState<Issue[]>([]);
   const [filteredData, setFilteredData] = useState<Issue[]>([]);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pagesCount, setPagesCount] = useState(1);
-
-  const [filter, setFilter] = useState({ column: 1, isAsc: true });
-
   useEffect(() => {
-    const pagesNumber = Math.ceil(data.length / PAGE_LIMIT);
-
-    setCurrentPage(1);
-    setPagesCount(pagesNumber);
-
     filterData();
   }, [data]);
 
   const fetchData = async () => {
-    await getIssues(organisation, repo)
+    await getIssues(query.organisation, query.repo)
       .then((newData: any) => {
         const newArray = newData.data.reduce(
           (lastItem: Issue[], newItem: any) => {
             const addItem: Issue = {
               id: newItem.id,
               title: newItem.title,
-              url: newItem.url,
               created_at: new Date(newItem.created_at),
               updated_at: new Date(newItem.updated_at),
             };
@@ -64,56 +53,53 @@ export const Issues: React.FC = () => {
         setTimeout(() => {
           setData(newArray);
           setLoad(true);
+          const totalPages = Math.ceil(newArray.length / PAGE_LIMIT);
+          dispatch(setPrepare({ ...prepare, page: 1, pages: totalPages }));
         }, 500);
       })
       .catch(() => {
         setTimeout(() => {
           setData([]);
           setLoad(true);
+          dispatch(setPrepare({ ...prepare, page: 1, pages: 1 }));
         }, 500);
       });
   };
 
   useEffect(() => {
-    if (query !== 0) {
+    if (query.query !== 0) {
       setLoad(false);
       fetchData();
     }
   }, [query]);
 
-  const updatePage = (newPage: number) => {
-    setCurrentPage(newPage);
-  };
-
   useEffect(() => {
     filterData();
-  }, [currentPage, filter]);
+  }, [prepare]);
 
   const filterData = () => {
-    const startItem = currentPage * PAGE_LIMIT - PAGE_LIMIT;
-    const endItem = currentPage * PAGE_LIMIT;
-
-    console.log(`startItem: ${startItem} endItem: ${endItem}`);
+    const startItem = prepare.page * PAGE_LIMIT - PAGE_LIMIT;
+    const endItem = prepare.page * PAGE_LIMIT;
 
     const updateData = data
       .filter(
         (item: Issue, index: number) => index >= startItem && index < endItem,
       )
       .sort((a: Issue, b: Issue) => {
-        switch (filter.column) {
+        switch (prepare.filter) {
           default:
           case 1:
-            return filter.isAsc
+            return prepare.isAsc
               ? a.title.localeCompare(b.title)
               : b.title.localeCompare(a.title);
 
           case 2:
-            return filter.isAsc
+            return prepare.isAsc
               ? b.created_at.getTime() - a.created_at.getTime()
               : a.created_at.getTime() - b.created_at.getTime();
 
           case 3:
-            return filter.isAsc
+            return prepare.isAsc
               ? b.updated_at.getTime() - a.updated_at.getTime()
               : a.updated_at.getTime() - b.updated_at.getTime();
         }
@@ -135,7 +121,7 @@ export const Issues: React.FC = () => {
         <Text style={{ color: colors.primaryText, fontSize: 30 }}>
           {!load
             ? 'Loading...'
-            : query === 0
+            : query.query === 0
             ? 'Press search!!!'
             : 'Not Found !!!'}
         </Text>
@@ -143,7 +129,7 @@ export const Issues: React.FC = () => {
     </View>
   ) : (
     <Fragment>
-      <IssuesHeaders filter={filter} setFilter={setFilter} />
+      <IssuesHeaders />
       <ScrollView
         contentInsetAdjustmentBehavior='automatic'
         style={styles.scroll_view}
@@ -153,18 +139,13 @@ export const Issues: React.FC = () => {
             <IssuesItem
               key={index}
               title={item.title}
-              url={item.url}
               created_at={item.created_at}
               updated_at={item.updated_at}
             />
           ))}
         </View>
       </ScrollView>
-      <Pagination
-        currentPage={currentPage}
-        pages={pagesCount}
-        updatePage={updatePage}
-      />
+      <Pagination />
     </Fragment>
   );
 };

@@ -1,24 +1,20 @@
 import React, { useContext } from 'react';
-import { Linking, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 import { ThemeContext } from '../../../themes/ThemeProvider';
 
 export const IssuesItem: React.FC<{
   key: number;
   title: string;
-  url: string;
   created_at: Date;
   updated_at: Date;
 }> = (children): JSX.Element => {
   const { colors } = useContext(ThemeContext);
 
-  const { title, url, created_at, updated_at } = children;
+  const { title, created_at, updated_at } = children;
 
   return (
-    <TouchableOpacity
-      style={[styles.headers, { borderColor: colors.divider }]}
-      onPress={() => Linking.openURL(url)}
-    >
+    <TouchableOpacity style={[styles.headers, { borderColor: colors.divider }]}>
       <Text style={[styles.title, { color: colors.secondaryText }]}>
         {title}
       </Text>
