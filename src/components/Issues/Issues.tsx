@@ -1,5 +1,12 @@
 import React, { Fragment, useContext, useEffect, useState } from 'react';
-import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Dimensions,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getIssues } from '../../services/octokitApi';
@@ -17,9 +24,7 @@ const { height } = Dimensions.get('window');
 
 const PAGE_LIMIT = 10;
 
-export const Issues: React.FC = () => {
-  const { colors } = useContext(ThemeContext);
-
+const useIssues = (): [Issue[], boolean, number] => {
   const dispatch = useDispatch();
   const { query } = useSelector((state: RootState) => state);
   const { prepare } = useSelector((state: RootState) => state);
@@ -35,8 +40,8 @@ export const Issues: React.FC = () => {
 
   const fetchData = async () => {
     await getIssues(query.organisation, query.repo)
-      .then((newData: any) => {
-        const newArray = newData.data.reduce(
+      .then((getData: any) => {
+        const newArray = getData.data.reduce(
           (lastItem: Issue[], newItem: any) => {
             const addItem: Issue = {
               id: newItem.id,
@@ -108,24 +113,23 @@ export const Issues: React.FC = () => {
     setFilteredData(updateData);
   };
 
-  return data.length === 0 || !load ? (
+  return [filteredData, load, query.query];
+};
+
+export const Issues: React.FC = () => {
+  const { colors } = useContext(ThemeContext);
+
+  const [filteredData, load, query] = useIssues();
+
+  return !load ? (
     <View style={styles.message}>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: height - 500,
-        }}
-      >
-        <Text style={{ color: colors.primaryText, fontSize: 30 }}>
-          {!load
-            ? 'Loading...'
-            : query.query === 0
-            ? 'Press search!!!'
-            : 'Not Found !!!'}
-        </Text>
-      </View>
+      <ActivityIndicator size='large' color={colors.primaryLight} />
+    </View>
+  ) : filteredData.length === 0 ? (
+    <View style={styles.message}>
+      <Text style={{ color: colors.primaryText, fontSize: 30 }}>
+        {query === 0 ? 'Press search!!!' : 'Not Found !!!'}
+      </Text>
     </View>
   ) : (
     <Fragment>
@@ -153,6 +157,10 @@ export const Issues: React.FC = () => {
 const styles = StyleSheet.create({
   message: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: height - 500,
+
     backgroundColor: '#FFFFFF',
   },
 
