@@ -43,7 +43,7 @@ export const IssuesHeaders: React.FC = (): JSX.Element => {
   return (
     <View style={[styles.headers, { backgroundColor: colors.primaryLight }]}>
       <Text
-        style={[styles.title, { color: colors.primaryText }]}
+        style={[styles.title, { color: colors.secondaryText }]}
         onPress={() => {
           updatePrepare(1);
         }}
@@ -57,7 +57,7 @@ export const IssuesHeaders: React.FC = (): JSX.Element => {
       </Text>
 
       <Text
-        style={[styles.created, { color: colors.primaryText }]}
+        style={[styles.created, { color: colors.secondaryText }]}
         onPress={() => {
           updatePrepare(2);
         }}
@@ -70,7 +70,7 @@ export const IssuesHeaders: React.FC = (): JSX.Element => {
         ) : null}
       </Text>
       <Text
-        style={[styles.updated, { color: colors.primaryText }]}
+        style={[styles.updated, { color: colors.secondaryText }]}
         onPress={() => {
           updatePrepare(3);
         }}
