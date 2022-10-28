@@ -11,9 +11,9 @@
 ## Technical requirements
 
 - [x] App is based on React Native
-- [ ] State and view of the app are separated
+- [x] State and view of the app are separated
 - [x] Static types are used to ensure soundness of the app
-- [ ] Code of the app adheres to the best industry practices
+- [x] Code of the app adheres to the best industry practices
 - [ ] App is well tested
 - [ ] Minimum required documentation is provided
 - [x] Source code is presented on GitHub
