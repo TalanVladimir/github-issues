@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Prepare } from '../types';
 
 const prepareSlice = createSlice({
   name: 'prepare',
@@ -9,15 +10,7 @@ const prepareSlice = createSlice({
     isAsc: true,
   },
   reducers: {
-    setPrepare(
-      state,
-      action: PayloadAction<{
-        page: number;
-        pages: number;
-        filter: number;
-        isAsc: boolean;
-      }>,
-    ) {
+    setPrepare(state, action: PayloadAction<Prepare>) {
       state.page = action.payload.page;
       state.pages = action.payload.pages;
       state.filter = action.payload.filter;
