@@ -8,14 +8,10 @@ import { ThemeContext } from '../../themes/ThemeProvider';
 export const Status = () => {
   const { isDark } = useContext(ThemeContext);
 
-  const backgroundStyle = {
-    backgroundColor: isDark ? Colors.darker : Colors.lighter,
-  };
-
   return (
     <StatusBar
       barStyle={isDark ? 'dark-content' : 'light-content'}
-      backgroundColor={backgroundStyle.backgroundColor}
+      backgroundColor={isDark ? Colors.darker : Colors.lighter}
     />
   );
 };
