@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -13,19 +13,50 @@ import { ThemeContext } from '../../themes/ThemeProvider';
 import { RootState } from '../../store/store';
 import { setQuery } from '../../store/reducers/query';
 
-export const Search = () => {
-  const { colors } = useContext(ThemeContext);
+type Search = {
+  organisation: string;
+  repo: string;
+};
 
+const useQuery = (): [
+  Search,
+  (elem: string) => void,
+  (elem: string) => void,
+  () => void,
+] => {
   const dispatch = useDispatch();
   const { query } = useSelector((state: RootState) => state);
 
-  const [inputOrganisation, setInputOrganisation] = useState('');
-  const [inputRepo, setInputRepo] = useState('');
+  const [search, setSearch] = useState<Search>({
+    organisation: 'xpsilvester',
+    repo: 'Project',
+  });
 
-  useEffect(() => {
-    setInputOrganisation('xpsilvester');
-    setInputRepo('Project');
-  }, []);
+  const updateOrganisation = (organisation: string) => {
+    setSearch({ ...search, organisation });
+  };
+
+  const updateRepo = (repo: string) => {
+    setSearch({ ...search, repo });
+  };
+
+  const updateQuery = () => {
+    dispatch(
+      setQuery({
+        organisation: search.organisation,
+        repo: search.repo,
+        query: 1 + query.query,
+      }),
+    );
+  };
+
+  return [search, updateOrganisation, updateRepo, updateQuery];
+};
+
+export const Search = () => {
+  const { colors } = useContext(ThemeContext);
+
+  const [search, updateOrganisation, updateRepo, updateQuery] = useQuery();
 
   return (
     <View style={[styles.container, { backgroundColor: colors.white }]}>
@@ -43,10 +74,8 @@ export const Search = () => {
                 color: colors.secondaryText,
               },
             ]}
-            onChangeText={(newOrganisation: string) => {
-              setInputOrganisation(newOrganisation);
-            }}
-            value={inputOrganisation}
+            onChangeText={updateOrganisation}
+            value={search.organisation}
           />
         </View>
         <View style={{ flex: 0.5, marginLeft: 5, marginRight: 10 }}>
@@ -62,24 +91,14 @@ export const Search = () => {
                 color: colors.secondaryText,
               },
             ]}
-            onChangeText={(newRepo: string) => {
-              setInputRepo(newRepo);
-            }}
-            value={inputRepo}
+            onChangeText={updateRepo}
+            value={search.repo}
           />
         </View>
       </View>
       <TouchableOpacity
         style={[styles.button, { backgroundColor: colors.primary }]}
-        onPress={() => {
-          dispatch(
-            setQuery({
-              organisation: inputOrganisation,
-              repo: inputRepo,
-              query: 1 + query.query,
-            }),
-          );
-        }}
+        onPress={() => updateQuery()}
       >
         <Text style={[styles.buttonText, { color: colors.text }]}>Search</Text>
       </TouchableOpacity>
