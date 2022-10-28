@@ -1,19 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPrepare } from '../../../store/reducers/prepare';
+
 import { RootState } from '../../../store/store';
+import { Prepare } from '../../../store/types';
+import { setPrepare } from '../../../store/reducers/prepare';
+
 import { ThemeContext } from '../../../themes/ThemeProvider';
 
-export const IssuesHeaders: React.FC = () => {
-  const { colors } = useContext(ThemeContext);
-
+const usePrepare = (): [Prepare, (updateFilter: number) => void] => {
   const dispatch = useDispatch();
   const { prepare } = useSelector((state: RootState) => state);
 
-  useEffect(() => {}, [prepare.filter, prepare.isAsc]);
-
-  const updateFilter = (updateFilter: number) => {
+  const updatePrepare = (updateFilter: number) => {
     if (updateFilter === prepare.filter) {
       dispatch(
         setPrepare({
@@ -33,12 +32,20 @@ export const IssuesHeaders: React.FC = () => {
     }
   };
 
+  return [prepare, updatePrepare];
+};
+
+export const IssuesHeaders: React.FC = () => {
+  const { colors } = useContext(ThemeContext);
+
+  const [prepare, updatePrepare] = usePrepare();
+
   return (
     <View style={[styles.headers, { backgroundColor: colors.primaryLight }]}>
       <Text
         style={[styles.title, { color: colors.primaryText }]}
         onPress={() => {
-          updateFilter(1);
+          updatePrepare(1);
         }}
       >
         Title
@@ -52,7 +59,7 @@ export const IssuesHeaders: React.FC = () => {
       <Text
         style={[styles.created, { color: colors.primaryText }]}
         onPress={() => {
-          updateFilter(2);
+          updatePrepare(2);
         }}
       >
         Created
@@ -65,7 +72,7 @@ export const IssuesHeaders: React.FC = () => {
       <Text
         style={[styles.updated, { color: colors.primaryText }]}
         onPress={() => {
-          updateFilter(3);
+          updatePrepare(3);
         }}
       >
         Updated
