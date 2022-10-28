@@ -5,7 +5,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 import { ThemeContext } from '../../themes/ThemeProvider';
 
-export const Status = () => {
+export const Status: React.FC = (): JSX.Element => {
   const { isDark } = useContext(ThemeContext);
 
   return (

@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { ThemeContext } from '../../themes/ThemeProvider';
 
-export const Header = () => {
+export const Header: React.FC = (): JSX.Element => {
   const { colors } = useContext(ThemeContext);
 
   return (

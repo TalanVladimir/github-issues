@@ -11,7 +11,7 @@ import { ThemeProvider } from './themes/ThemeProvider';
 
 import { Home } from './components/Home';
 
-const App = () => {
+const App: React.FC = (): JSX.Element => {
   return (
     <ThemeProvider>
       <Provider store={store}>

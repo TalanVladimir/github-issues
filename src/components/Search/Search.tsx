@@ -53,7 +53,7 @@ const useQuery = (): [
   return [search, updateOrganisation, updateRepo, updateQuery];
 };
 
-export const Search = () => {
+export const Search: React.FC = (): JSX.Element => {
   const { colors } = useContext(ThemeContext);
 
   const [search, updateOrganisation, updateRepo, updateQuery] = useQuery();

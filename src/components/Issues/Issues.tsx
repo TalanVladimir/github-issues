@@ -116,7 +116,7 @@ const useIssues = (): [Issue[], boolean, number] => {
   return [filteredData, load, query.query];
 };
 
-export const Issues: React.FC = () => {
+export const Issues: React.FC = (): JSX.Element => {
   const { colors } = useContext(ThemeContext);
 
   const [filteredData, load, query] = useIssues();

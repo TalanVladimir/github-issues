@@ -5,7 +5,7 @@ import { Header } from './Header/Header';
 import { Status } from './Status/Status';
 import { Issues } from './Issues/Issues';
 
-export const Home = () => {
+export const Home: React.FC = (): JSX.Element => {
   return (
     <Fragment>
       <Status />

@@ -18,7 +18,7 @@ const usePrepare = (): [Prepare, (item: number) => void] => {
   return [prepare, updatePrepare];
 };
 
-export const Pagination: React.FC = () => {
+export const Pagination: React.FC = (): JSX.Element => {
   const { colors } = useContext(ThemeContext);
 
   const [prepare, updatePrepare] = usePrepare();

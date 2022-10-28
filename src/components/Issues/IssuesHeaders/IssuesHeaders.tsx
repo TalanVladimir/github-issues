@@ -35,7 +35,7 @@ const usePrepare = (): [Prepare, (updateFilter: number) => void] => {
   return [prepare, updatePrepare];
 };
 
-export const IssuesHeaders: React.FC = () => {
+export const IssuesHeaders: React.FC = (): JSX.Element => {
   const { colors } = useContext(ThemeContext);
 
   const [prepare, updatePrepare] = usePrepare();
