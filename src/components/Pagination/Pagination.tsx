@@ -3,14 +3,25 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPrepare } from '../../store/reducers/prepare';
 import { RootState } from '../../store/store';
+import { Prepare } from '../../store/types';
 
 import { ThemeContext } from '../../themes/ThemeProvider';
+
+const usePrepare = (): [Prepare, (item: number) => void] => {
+  const dispatch = useDispatch();
+  const { prepare } = useSelector((state: RootState) => state);
+
+  const updatePrepare = (item: number): void => {
+    dispatch(setPrepare({ ...prepare, page: item }));
+  };
+
+  return [prepare, updatePrepare];
+};
 
 export const Pagination: React.FC = () => {
   const { colors } = useContext(ThemeContext);
 
-  const dispatch = useDispatch();
-  const { prepare } = useSelector((state: RootState) => state);
+  const [prepare, updatePrepare] = usePrepare();
 
   return (
     <View style={[styles.container, { backgroundColor: colors.primary }]}>
@@ -30,9 +41,7 @@ export const Pagination: React.FC = () => {
                   item === prepare.page ? colors.text : colors.secondaryText,
               },
             ]}
-            onPress={() => {
-              dispatch(setPrepare({ ...prepare, page: item }));
-            }}
+            onPress={() => updatePrepare(item)}
           >
             {item}
           </Text>
