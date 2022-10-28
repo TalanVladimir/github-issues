@@ -9,7 +9,7 @@ export const Header: React.FC = (): JSX.Element => {
   return (
     <View style={{ backgroundColor: colors.primaryDark }}>
       <Text style={[styles.header, { color: colors.text }]}>
-        Search Github Issues{' '}
+        Search Github Issues
       </Text>
     </View>
   );
