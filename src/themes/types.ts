@@ -1,4 +1,5 @@
 export type ThemeType = {
+  isDark: boolean;
   colors: {
     primaryDark: string;
     primaryLight: string;

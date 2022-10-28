@@ -1,6 +1,7 @@
 import { ThemeType } from './types';
 
 export const DarkTheme: ThemeType = {
+  isDark: true,
   colors: {
     primaryDark: '#2E2E2E',
     primaryLight: '#EEEEEE',
