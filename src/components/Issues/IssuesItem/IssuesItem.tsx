@@ -18,7 +18,6 @@ export const IssuesItem: React.FC<{
       <Text style={[styles.title, { color: colors.secondaryText }]}>
         {title}
       </Text>
-
       <Text style={[styles.created, { color: colors.secondaryText }]}>
         {created_at.toISOString().substring(0, 10)}
       </Text>
