@@ -7,15 +7,7 @@ export const Header = () => {
   const { colors } = useContext(ThemeContext);
 
   return (
-    <View
-      style={[
-        styles.container,
-        {
-          borderColor: colors.divider,
-          backgroundColor: colors.primaryDark,
-        },
-      ]}
-    >
+    <View style={{ backgroundColor: colors.primaryDark }}>
       <Text style={[styles.header, { color: colors.text }]}>
         Search Github Issues{' '}
       </Text>
@@ -24,10 +16,6 @@ export const Header = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    borderBottomWidth: 1,
-  },
-
   header: {
     fontSize: 35,
     textAlign: 'center',
